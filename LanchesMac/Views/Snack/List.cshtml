@@ -1,0 +1,14 @@
+﻿@model IEnumerable<LanchesMac.Models.Snack>
+
+<div>
+    <h2>Todos os Lanches</h2>
+</div>
+
+@foreach(var snack in Model)
+{
+    <div>
+        <h4>@snack.Name</h4>
+        <p><img src = "@snack.ImageUrl"></p>
+        <h3>Preço: @snack.Price</h3>
+    </div>
+}

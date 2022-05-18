@@ -13,7 +13,7 @@ namespace LanchesMac.Repositories
             _context = context;
         }
 
-        public IEnumerable<Snack> Snacks => _context.Snacks.Include(c => c.Category);
+        public IEnumerable<Snack> Snacks => _context.Snacks.Include(c => c.Category); //Incluido na consulta os lanches na categoria 
 
         public IEnumerable<Snack> FavoriteSnacks => _context.Snacks
             .Where(f => f.IsFavoriteSnack)

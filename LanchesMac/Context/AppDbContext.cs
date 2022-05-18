@@ -12,5 +12,6 @@ namespace LanchesMac.Context
         // Define as classes para mapear das tabelas 
         public DbSet<Category> Categories { get; set; } // Vai criar a tabela Categories
         public DbSet<Snack> Snacks { get; set; } // Vai criar a tabela Snacks
+        public DbSet<CartPurchaseItem> CartPurchaseItems { get; set; }
     }
 }

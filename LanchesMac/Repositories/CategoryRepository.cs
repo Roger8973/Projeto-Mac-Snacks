@@ -7,11 +7,11 @@ namespace LanchesMac.Repositories
     {
         private readonly AppDbContext _context;
 
-        public CategoryRepository(AppDbContext context) // injetando uma instancia chamadada context (feita pelo container D.I) e atribuindo a variavel _context
+        public CategoryRepository(AppDbContext context) 
         {
             _context = context;
         }
 
-        public IEnumerable<Category> Categories => _context.Categories; // retornando do banco de dados uma coleção de categorias da tabela categoria
+        public IEnumerable<Category> Categories => _context.Categories; 
     }
 }

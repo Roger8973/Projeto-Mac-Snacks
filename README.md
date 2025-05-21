@@ -11,7 +11,5 @@ Foi criado também uma área de login para o administrador do site fazer altera�
 
 O projeto está utilizando o banco de dados SQL Server.
 
-O front-end do projeto está em desenvolvimento, o foco está por enquanto no back-end.
 
-O projeto está sendo continuamente melhorado e ainda não está concluído.
 

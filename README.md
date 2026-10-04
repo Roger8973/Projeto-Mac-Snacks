@@ -1,76 +1,76 @@
 # 🍔 Mac Snacks (LanchesMac)
 
-Aplicação web em **ASP.NET Core MVC (.NET 6)** que simula uma loja online de lanches: catálogo por categoria, carrinho de compras, checkout de pedidos e autenticação com perfis de acesso (membro e administrador).
+A web application built with **ASP.NET Core MVC (.NET 6)** that simulates an online snack shop: a catalog organized by category, a shopping cart, order checkout, and authentication with role-based access (member and administrator).
 
 ---
 
-## ✨ Funcionalidades
+## ✨ Features
 
-- **Página inicial** com carrossel e vitrine dos lanches marcados como preferidos.
-- **Catálogo de lanches** com listagem geral, filtro por categoria (`/Snack/List/{categoria}`) e página de detalhes.
-- **Carrinho de compras** persistido no banco e vinculado à sessão do usuário (`CartId` em sessão): adicionar, remover e ver o resumo com total.
-- **Checkout** com formulário de entrega validado (nome, endereço, CEP etc.), cálculo do total de itens e do valor e gravação do pedido com seus detalhes (`Order` / `OrderDetail`).
-- **Autenticação e cadastro** com ASP.NET Core Identity — é preciso estar logado para adicionar itens ao carrinho.
-- **Perfis de acesso** (`Member` e `Admin`) criados automaticamente na inicialização, com política de autorização `Admin`.
-- **Área administrativa** (`/Admin`) restrita ao perfil Admin.
-- **Página de contato** e Tag Helper customizado de e-mail.
-- **View Components**: menu de categorias e resumo do carrinho no layout.
+- **Home page** with a carousel and a showcase of snacks flagged as favorites.
+- **Snack catalog** with a full listing, filtering by category (`/Snack/List/{category}`), and a details page.
+- **Shopping cart** stored in the database and tied to the user's session (`CartId` kept in session): add items, remove items, and view a summary with the total.
+- **Checkout** with a validated delivery form (name, address, ZIP code, etc.), calculation of total items and total price, and persistence of the order with its line items (`Order` / `OrderDetail`).
+- **Authentication and registration** with ASP.NET Core Identity. Users must be logged in to add items to the cart.
+- **Access roles** (`Member` and `Admin`) created automatically at startup, with an `Admin` authorization policy.
+- **Admin area** (`/Admin`) restricted to the Admin role.
+- **Contact page** and a custom e-mail Tag Helper.
+- **View Components**: category menu and cart summary in the layout.
 
-## 🛠️ Tecnologias
+## 🛠️ Tech Stack
 
-| Camada | Tecnologia |
+| Layer | Technology |
 |---|---|
 | Framework | ASP.NET Core MVC — .NET 6 |
 | ORM | Entity Framework Core 6 (Code First + Migrations) |
-| Banco de dados | SQL Server (Express/LocalDB) |
-| Autenticação | ASP.NET Core Identity |
+| Database | SQL Server (Express/LocalDB) |
+| Authentication | ASP.NET Core Identity |
 | Front-end | Razor Views, Bootstrap 5, jQuery, jQuery Validation |
 
-## 🧱 Arquitetura
+## 🧱 Architecture
 
-O projeto segue o padrão **MVC** com **Repository Pattern** e injeção de dependência nativa:
+The project follows the **MVC** pattern with the **Repository Pattern** and built-in dependency injection:
 
 ```
 LanchesMac/
-├── Areas/Admin/        # Área administrativa (restrita ao perfil Admin)
+├── Areas/Admin/        # Admin area (restricted to the Admin role)
 ├── Components/         # View Components (CategoryMenu, ShoppingCartSummary)
 ├── Context/            # AppDbContext (IdentityDbContext + DbSets)
 ├── Controllers/        # Home, Snack, CartPurchase, Order, Account, Contact
-├── Migrations/         # Migrations do EF Core (inclui carga inicial de dados)
+├── Migrations/         # EF Core migrations (including initial data seeding)
 ├── Models/             # Snack, Category, CartPurchase, CartPurchaseItem, Order, OrderDetail
-├── Repositories/       # Repositórios e interfaces (Snacks, Categories, Orders)
-├── Services/           # Seed de perfis e usuários iniciais
+├── Repositories/       # Repositories and interfaces (Snacks, Categories, Orders)
+├── Services/           # Seeding of initial roles and users
 ├── TagHelpers/         # EmailTagHelper
-├── ViewModels/         # ViewModels das telas
+├── ViewModels/         # Screen ViewModels
 ├── Views/              # Razor Views
-└── wwwroot/            # Arquivos estáticos (css, js, imagens, libs)
+└── wwwroot/            # Static files (css, js, images, libs)
 ```
 
-**Modelo de dados**
+**Data model**
 
 - `Category` 1 — N `Snack`
-- `CartPurchaseItem` → `Snack` (itens do carrinho, agrupados por `CartId`)
+- `CartPurchaseItem` → `Snack` (cart items, grouped by `CartId`)
 - `Order` 1 — N `OrderDetail` → `Snack`
-- Tabelas do Identity (`AspNetUsers`, `AspNetRoles`, …)
+- Identity tables (`AspNetUsers`, `AspNetRoles`, …)
 
-## 🚀 Como executar
+## 🚀 Getting Started
 
-### Pré-requisitos
+### Prerequisites
 
 - [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-- SQL Server (Express ou LocalDB)
-- Ferramenta do EF Core: `dotnet tool install --global dotnet-ef`
+- SQL Server (Express or LocalDB)
+- EF Core CLI tool: `dotnet tool install --global dotnet-ef`
 
-### Passo a passo
+### Steps
 
-1. **Clone o repositório**
+1. **Clone the repository**
 
    ```bash
    git clone https://github.com/Roger8973/Projeto-Mac-Snacks.git
    cd Projeto-Mac-Snacks/LanchesMac
    ```
 
-2. **Configure a connection string** em `appsettings.json` apontando para a sua instância do SQL Server. Exemplo com LocalDB:
+2. **Set the connection string** in `appsettings.json` to point to your SQL Server instance. Example using LocalDB:
 
    ```json
    "ConnectionStrings": {
@@ -78,55 +78,55 @@ LanchesMac/
    }
    ```
 
-3. **Crie o banco e aplique as migrations** (isso também popula categorias e lanches):
+3. **Create the database and apply the migrations** (this also seeds categories and snacks):
 
    ```bash
    dotnet ef database update
    ```
 
-4. **Execute a aplicação**
+4. **Run the application**
 
    ```bash
    dotnet run
    ```
 
-   Acesse `https://localhost:7198` (ou `http://localhost:5198`).
+   Open `https://localhost:7198` (or `http://localhost:5198`).
 
-### Dados iniciais
+### Seed data
 
-As migrations carregam as categorias **Normal** e **Natural** e alguns lanches de exemplo (Cheese Salada, Misto Quente, Cheese Burger, Lanche Natural Peito de Peru…).
+The migrations load the **Normal** and **Natural** categories along with some sample snacks (Cheese Salada, Misto Quente, Cheese Burger, Lanche Natural Peito de Peru…).
 
-Na inicialização, a aplicação cria os perfis e os usuários abaixo, caso ainda não existam:
+At startup, the application creates the following roles and users if they don't exist yet:
 
-| Usuário | Senha | Perfil |
+| User | Password | Role |
 |---|---|---|
 | `usuario@localhost` | `Numsey#2022` | Member |
 | `admin@localhost` | `Numsey#2022` | Admin |
 
-> ⚠️ Essas credenciais são apenas para ambiente de desenvolvimento.
+> ⚠️ These credentials are intended for development environments only.
 
-## 🗺️ Principais rotas
+## 🗺️ Main Routes
 
-| Rota | Descrição |
+| Route | Description |
 |---|---|
-| `/` | Página inicial |
-| `/Snack/List` | Todos os lanches |
-| `/Snack/List/{categoria}` | Lanches de uma categoria |
-| `/Snack/Details?snackId={id}` | Detalhes de um lanche |
-| `/CartPurchase` | Carrinho de compras |
-| `/Order/Checkout` | Finalização do pedido |
-| `/Account/Login` · `/Account/Register` | Login e cadastro |
-| `/Admin` | Área administrativa (perfil Admin) |
-| `/Contact` | Fale conosco |
+| `/` | Home page |
+| `/Snack/List` | All snacks |
+| `/Snack/List/{category}` | Snacks in a category |
+| `/Snack/Details?snackId={id}` | Snack details |
+| `/CartPurchase` | Shopping cart |
+| `/Order/Checkout` | Order checkout |
+| `/Account/Login` · `/Account/Register` | Login and registration |
+| `/Admin` | Admin area (Admin role) |
+| `/Contact` | Contact us |
 
-## 📌 Próximos passos
+## 📌 Roadmap
 
-- [ ] CRUD de lanches, categorias e pedidos na área administrativa
-- [ ] Exigir autenticação também no checkout
-- [ ] Busca de lanches por nome
-- [ ] Testes automatizados
-- [ ] Migrar para .NET 8 (LTS) — o .NET 6 está fora de suporte
+- [ ] CRUD for snacks, categories, and orders in the admin area
+- [ ] Require authentication for checkout as well
+- [ ] Search snacks by name
+- [ ] Automated tests
+- [ ] Upgrade to .NET 8 (LTS) — .NET 6 is out of support
 
-## 👤 Autor
+## 👤 Author
 
 **Roger Fraga Messina** — [GitHub](https://github.com/Roger8973)
